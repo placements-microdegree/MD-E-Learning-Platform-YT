@@ -1,0 +1,37 @@
+<!-- Paste once, as high as possible inside <head> of the landing page -->
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '187849266414718');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=187849266414718&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- Click and engagement tracking: paste just before </body> -->
+<script>
+(function () {
+  if (!window.fbq) return;
+  // Every Enroll Now button (header, hero, curriculum, get, offer card, sticky bar)
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-track="enroll"]');
+    if (!a) return;
+    fbq('track', 'InitiateCheckout', { value: 399, currency: 'INR', content_name: 'Premium Plan' });
+    fbq('trackCustom', 'EnrollClick', { location: a.getAttribute('data-loc') });
+  }, true);
+  // "See full curriculum" opened
+  document.querySelectorAll('[data-track="curriculum"]').forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (d.open) fbq('track', 'ViewContent', { content_name: 'Full curriculum' });
+    });
+  });
+})();
+</script>

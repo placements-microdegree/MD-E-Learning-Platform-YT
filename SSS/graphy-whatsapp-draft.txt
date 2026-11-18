@@ -1,0 +1,9 @@
+Hi team, a few things we'd like fixed on the checkout/login flow (screenshots attached):
+
+1. After checkout, "Access Now" takes the learner to a login page instead of straight into the course — they don't have a password yet at that point. Can we skip this and let them straight in, or replace it with a quick "complete your profile" step instead?
+
+2. If that login step can't be removed — can we at least show a message on that screen like "We've emailed you your login details, use them to log in and set your password"? Right now it's just a blank login form with no explanation.
+
+3. Every signup sends 2 separate emails. Also, the first (default) welcome email shows the web address as learning.microdegree.work — we want it to show www.microdegree.work/learning instead, like our custom communication email already does. Can you fix the default one and also cut it down to one email?
+
+Attaching a short PDF with screenshots for all 3 points.

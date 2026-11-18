@@ -1,0 +1,107 @@
+.section {
+  position: relative;
+  padding: clamp(52px, 7vw, 104px) clamp(16px, 4vw, 32px);
+  background: var(--color-bg-tint);
+  overflow: hidden;
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.5;
+  background-image: var(--section-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+.watermark {
+  position: absolute;
+  right: -20px;
+  bottom: -26px;
+  font-family: var(--font-kannada);
+  font-weight: 700;
+  font-size: clamp(72px, 13vw, 180px);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(75, 27, 224, 0.13);
+  pointer-events: none;
+  user-select: none;
+}
+
+.container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  margin-top: clamp(26px, 4vw, 44px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(30%, 250px), 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(23, 18, 31, 0.08);
+  border-radius: 20px;
+  padding: clamp(22px, 2.6vw, 30px);
+  box-shadow: 0 6px 18px rgba(45, 15, 120, 0.04);
+  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(250, 16, 85, 0.32);
+  box-shadow: 0 22px 44px rgba(45, 15, 120, 0.12);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: linear-gradient(140deg, rgba(75, 27, 224, 0.14), rgba(250, 16, 85, 0.14));
+  border: 1px solid rgba(75, 27, 224, 0.16);
+  color: var(--color-violet-deep);
+}
+
+.glyphIcon {
+  width: 21px;
+  height: 21px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-muted-4);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(17px, 1.9vw, 20px);
+  letter-spacing: -0.02em;
+  margin-top: clamp(16px, 2vw, 20px);
+}
+
+.body {
+  color: var(--color-muted-1);
+  font-size: 15.5px;
+  line-height: 1.58;
+  margin: 8px 0 0;
+}

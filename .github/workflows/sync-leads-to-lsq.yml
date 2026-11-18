@@ -1,0 +1,97 @@
+# Runs app/api/cron/sync-leads-to-lsq daily, pushing any graphy_leads row that's crossed its
+# 7-day-since-signup mark into LeadSquared. See that route's file header for the full design; the
+# short version is: nothing here decides WHO gets sent or WHEN -  that's entirely the route's own
+# database query. This workflow's only job is to call it repeatedly until the queue is drained
+# (so a big backlog, e.g. the very first run, can't time out a single request) and to make sure a
+# failure is IMPOSSIBLE to miss.
+#
+# On failure: GitHub automatically emails whoever owns/watches this repo when a scheduled workflow
+# run fails, no extra setup needed -  that's the alerting. Even so, a failed run never loses data:
+# app/api/cron/sync-leads-to-lsq only marks a lead as sent after a confirmed successful LeadSquared
+# response, so anything missed by a failed run is simply retried the next day, automatically.
+#
+# One-time setup this workflow depends on -  a repository secret named LSQ_SYNC_SECRET, set to the
+# exact same value as LEADSQUARED_WEBHOOK_SECRET in your Netlify env vars (Settings -> Secrets and
+# variables -> Actions -> New repository secret, in THIS GitHub repo).
+
+name: Sync Graphy leads to LeadSquared
+
+on:
+  schedule:
+    # 03:00 UTC = 08:30 IST daily. GitHub may delay a scheduled run by a few minutes under load;
+    # that's harmless here since the whole point is a 7-DAY window, not a precise-to-the-minute one.
+    - cron: "0 3 * * *"
+  workflow_dispatch: {} # adds a "Run workflow" button on the Actions tab, for an on-demand run
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Drain the LeadSquared sync queue
+        env:
+          SYNC_URL: https://microdegree.in/api/cron/sync-leads-to-lsq
+          SECRET: ${{ secrets.LSQ_SYNC_SECRET }}
+        run: |
+          set -uo pipefail
+
+          any_failed=0
+          prev_remaining=""
+
+          for i in $(seq 1 50); do
+            response=$(curl -sS -w '\n%{http_code}' -X POST "$SYNC_URL?secret=$SECRET")
+            http_code=$(echo "$response" | tail -n1)
+            body=$(echo "$response" | sed '$d')
+
+            if [ "$http_code" != "200" ]; then
+              echo "Call $i failed with HTTP $http_code: $body"
+              any_failed=1
+              break
+            fi
+
+            echo "Call $i: $body"
+
+            failed=$(echo "$body" | jq -r '.failed')
+            matched_existing=$(echo "$body" | jq -r '.matchedExisting')
+            created_new=$(echo "$body" | jq -r '.createdNew')
+            remaining=$(echo "$body" | jq -r '.remaining')
+
+            echo "  matched an existing LeadSquared lead by phone/mobile: $matched_existing | created/updated under the graphy email: $created_new"
+
+            if [ "$failed" != "0" ]; then
+              echo "$failed lead(s) failed to push this call - see failedEmails above."
+              any_failed=1
+            fi
+
+            if [ "$remaining" = "0" ]; then
+              echo "Queue drained after $i call(s)."
+              break
+            fi
+
+            # Safety net: if remaining hasn't moved since the last call, every lead in this batch is
+            # stuck on something the route can't resolve on its own (e.g. the 2026-09-25 incident -
+            # 4 real leads retried 48 times with zero progress before this check existed). Stop
+            # burning calls instead of spinning to the 50-call cap every time.
+            if [ "$remaining" = "$prev_remaining" ]; then
+              echo "No progress since the last call ($remaining unchanged) - stopping early instead of retrying the same stuck lead(s) all the way to the 50-call cap."
+              any_failed=1
+              break
+            fi
+            prev_remaining="$remaining"
+
+            # LeadSquared enforces 15 API calls per 5 seconds per account, and each lead can cost up
+            # to 2 calls (search + capture/update) - calling this route back-to-back with no gap can
+            # burst past that limit even though the route itself now retries once on a 429 (see its
+            # file header for the 2026-09-28 incident: call 3 of this same loop failed 2 real leads
+            # outright on MXAPIRateLimitExceededException). A short pause between calls keeps the
+            # aggregate rate well under the limit instead of relying on the retry alone.
+            sleep 2
+
+            if [ "$i" = "50" ]; then
+              echo "Stopped after 50 calls with $remaining still remaining - unusually large backlog, will continue on the next scheduled run."
+            fi
+          done
+
+          if [ "$any_failed" = "1" ]; then
+            echo "One or more leads (or calls) failed - failing this job so GitHub sends a failure notification."
+            exit 1
+          fi

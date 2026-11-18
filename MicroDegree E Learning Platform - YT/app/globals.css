@@ -1,0 +1,45 @@
+:root {
+  --color-ink: #17121f;
+  --color-bg: #ffffff;
+  --color-bg-tint: #faf8fe;
+  --color-violet: #4b1be0;
+  --color-violet-deep: #4415c7;
+  --color-pink: #fa1055;
+  --color-muted-1: #6e6580;
+  --color-muted-2: #55506b;
+  --color-muted-3: #8a8398;
+  --color-muted-4: #a39bb4;
+  --color-muted-5: #443c58;
+  --gradient-brand: linear-gradient(120deg, #4b1be0, #fa1055);
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-heading: var(--font-heading), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --font-kannada: var(--font-kannada), sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--color-violet);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+

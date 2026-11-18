@@ -1,0 +1,75 @@
+.section {
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 32px);
+  background: var(--color-bg-tint);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.banner {
+  border-radius: clamp(22px, 3vw, 32px);
+  padding: clamp(36px, 6vw, 84px) clamp(22px, 4vw, 60px);
+  text-align: center;
+  background: linear-gradient(130deg, #7c2d0e 0%, #c2410c 46%, #f59e0b 100%);
+  box-shadow: 0 34px 76px rgba(154, 52, 18, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.dotOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+
+.eyebrow {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.heading {
+  position: relative;
+  font-family: var(--font-heading);
+  font-size: clamp(27px, 4.8vw, 52px);
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 12px 0 0;
+  line-height: 1.05;
+}
+
+.lede {
+  position: relative;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.6;
+  margin: 16px auto 0;
+  max-width: 50ch;
+}
+
+.cta {
+  position: relative;
+  margin-top: clamp(26px, 3.5vw, 34px);
+  display: inline-block;
+  padding: 17px clamp(30px, 4vw, 44px);
+  border-radius: 14px;
+  background: #ffffff;
+  color: #9a3412;
+  font-weight: 700;
+  font-size: clamp(16px, 1.6vw, 18px);
+  box-shadow: 0 18px 38px rgba(67, 20, 7, 0.26);
+  transition: transform 0.18s ease;
+}
+
+.cta:hover {
+  transform: translateY(-3px);
+  color: #c2410c;
+}

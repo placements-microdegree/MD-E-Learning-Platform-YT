@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(NODE_PATH=\"C:/Users/Rajath/AppData/Roaming/npm/node_modules/n8n/node_modules\" node \"C:/Users/Rajath/AppData/Local/Temp/claude/d--Projects-MicroDegree-E-Learning-Platform/a7349e65-be3c-480c-8490-95405c4d431d/scratchpad/check-proof.mjs\")",
+      "Bash(ls \"C:/Users/Rajath/AppData/Local/ms-playwright\" 2>&1 | head -20)",
+      "Read(//c/Users/Rajath/AppData/Local/ms-playwright/**)",
+      "Bash(node check-proof.mjs)",
+      "Bash(node check-toggle.mjs)",
+      "Bash(node check-inline.mjs)",
+      "Bash(node check-hero.mjs)",
+      "PowerShell(claude plugin --help)",
+      "PowerShell(claude plugin install mattpocock-skills)",
+      "Read(//c/Users/Rajath/.claude/plugins/cache/claude-plugins-official/mattpocock-skills/1.2.3/skills/engineering/setup-matt-pocock-skills/**)",
+      "Bash(sort -k5 -n -r)",
+      "Bash(where cwebp *)",
+      "Bash(where magick *)",
+      "Bash(where convert *)",
+      "Bash(node -e \"const sharp=require\\('sharp'\\); console.log\\('sharp loaded', sharp.versions\\);\")",
+      "Bash(node -e ' *)",
+      "Bash(node \"C:/Users/Rajath/AppData/Local/Temp/claude/d--Projects-MicroDegree-E-Learning-Platform/227324a1-3020-46e6-9d99-f8e4dfddd295/scratchpad/convert-bg.mjs\")",
+      "Bash(node scripts/_tmp-convert-bg.mjs)",
+      "Bash(timeout 30 bash -c 'until curl -sf http://localhost:3000 >/dev/null; do sleep 1; done')",
+      "Bash(npm config *)",
+      "Read(//c/Users/Rajath/AppData/Local/npm-cache/_npx/**)",
+      "Bash(NODE_PATH=\"C:/Users/Rajath/AppData/Local/npm-cache/_npx/db89d7302a373f10/node_modules\" node \"C:/Users/Rajath/AppData/Local/Temp/claude/d--Projects-MicroDegree-E-Learning-Platform/227324a1-3020-46e6-9d99-f8e4dfddd295/scratchpad/mobile-check.mjs\")",
+      "Bash(cp \"C:/Users/Rajath/AppData/Local/Temp/claude/d--Projects-MicroDegree-E-Learning-Platform/227324a1-3020-46e6-9d99-f8e4dfddd295/scratchpad/mobile-check.mjs\" \"C:/Users/Rajath/AppData/Local/npm-cache/_npx/db89d7302a373f10/mobile-check.mjs\")",
+      "Read(//c/Users/Rajath/AppData/Local/npm-cache/_npx/db89d7302a373f10/**)",
+      "Bash(node mobile-check.mjs)",
+      "Bash(node mobile-check2.mjs)",
+      "Bash(node mobile-check3.mjs)",
+      "Bash(lsof -ti:3000 -sTCP:LISTEN)",
+      "Bash(xargs -r kill)",
+      "Bash(rm -f \"C:/Users/Rajath/AppData/Local/npm-cache/_npx/db89d7302a373f10/mobile-check\"*.mjs \"C:/Users/Rajath/AppData/Local/npm-cache/_npx/db89d7302a373f10/\"*.png)",
+      "Bash(node referral-check.mjs)",
+      "Bash(curl -s -o /dev/null -w \"proof.webp: %{http_code}\\\\n\" http://localhost:3000/images/sec_background/proof.webp)",
+      "Bash(curl -s -o /dev/null -w \"whyus.webp: %{http_code}\\\\n\" http://localhost:3000/images/sec_background/whyus.webp)",
+      "Bash(rm -f \"C:/Users/Rajath/AppData/Local/npm-cache/_npx/db89d7302a373f10/referral-check.mjs\" \"C:/Users/Rajath/AppData/Local/npm-cache/_npx/db89d7302a373f10/\"*.png)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Rajath\\AppData\\Local\\npm-cache\\_npx\\db89d7302a373f10"
+    ]
+  }
+}

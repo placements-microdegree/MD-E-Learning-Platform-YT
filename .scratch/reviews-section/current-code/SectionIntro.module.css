@@ -1,0 +1,27 @@
+.wrap {
+  max-width: 620px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-pink);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(25px, 4.2vw, 42px);
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 12px 0 0;
+  line-height: 1.08;
+}
+
+.subtitle {
+  color: var(--color-muted-1);
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.6;
+  margin: 12px 0 0;
+}

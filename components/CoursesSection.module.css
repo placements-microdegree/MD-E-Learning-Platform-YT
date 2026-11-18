@@ -1,0 +1,834 @@
+.section {
+  position: relative;
+  padding: clamp(52px, 7vw, 104px) clamp(16px, 4vw, 32px);
+  background: var(--color-bg-tint);
+  overflow: hidden;
+}
+
+.watermark {
+  position: absolute;
+  right: -30px;
+  top: 40px;
+  font-family: var(--font-kannada);
+  font-weight: 700;
+  font-size: clamp(70px, 12vw, 170px);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(75, 27, 224, 0.11);
+  pointer-events: none;
+  user-select: none;
+}
+
+.container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  margin-top: clamp(20px, 3vw, 32px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  gap: clamp(14px, 2vw, 24px);
+  align-items: stretch;
+}
+
+/* Paid-course-only variant (/premium): a single Premium card. On mobile / tablet it
+   stays a normal centred card; on desktop it spreads into a wide two-column card. */
+.gridSingle {
+  grid-template-columns: minmax(0, 460px);
+  justify-content: center;
+}
+
+@media (min-width: 920px) {
+  .gridSingle {
+    grid-template-columns: minmax(0, 1000px);
+  }
+}
+
+/* .planMain / .planAside wrap the card's two halves. Plain blocks by default (the
+   normal stacked card renders exactly as before); the wide desktop card below turns
+   .planInner into a grid and places them side by side. The chip / track grids and the
+   space-between distribution below exist to fill the card edge-to-edge with no dead space. */
+@media (min-width: 920px) {
+  .wide .planInner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(28px, 3.5vw, 52px);
+    row-gap: 0;
+    align-content: start;
+    grid-template-areas:
+      "main aside"
+      "cta  cta";
+  }
+
+  .wide .planMain {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Number + "courses" sits beside the plan name rather than pinned to the far
+     right of the column (where it would collide with the divider). */
+  .wide .planHead {
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: clamp(20px, 3vw, 44px);
+  }
+
+  .wide .planCount {
+    text-align: left;
+  }
+
+  /* Tighter vertical rhythm above the chips so the left column doesn't outgrow
+     the right. */
+  .wide .priceRow {
+    margin-top: clamp(10px, 1.4vw, 14px);
+  }
+
+  .wide .levelBadge {
+    margin-top: clamp(10px, 1.4vw, 14px);
+  }
+
+  /* Two per row, filling the column width. Kept compact (single line, small
+     padding) so the three highlight rows end level with the right column's
+     content — the two halves finish at the same height. */
+  .wide .highlights {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    padding-top: clamp(10px, 1.4vw, 14px);
+  }
+
+  .wide .highlightChip {
+    justify-content: flex-start;
+    padding: 9px 14px;
+    font-size: 12px;
+  }
+
+  .wide .planAside {
+    grid-area: aside;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    padding-left: clamp(28px, 3.5vw, 52px);
+    border-left: 1px solid rgba(23, 18, 31, 0.09);
+  }
+
+  /* Two per row, filling the column width. */
+  .wide .tracks {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    margin: clamp(12px, 1.6vw, 16px) 0 0;
+  }
+
+  .wide .trackChip {
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    padding: 15px 12px;
+    font-size: 13px;
+  }
+
+  /* Highlighted, full-width bar that lines up flush with the ends of the track
+     grid above it. Accent is the Premium plan's pink — .wide only ever renders
+     that plan (the /premium variant), so it's safe to hardcode here. */
+  .wide .certRow {
+    margin-top: clamp(12px, 1.6vw, 16px);
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    background: rgba(250, 16, 85, 0.08);
+    border: 1px solid rgba(250, 16, 85, 0.22);
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .wide .certRow .certIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .wide .divider {
+    display: none;
+  }
+
+  .wide .ctaWrap {
+    grid-area: cta;
+    margin-top: clamp(16px, 2vw, 22px);
+  }
+}
+
+.planOuter {
+  position: relative;
+  border-radius: 22px;
+  padding: 1.5px;
+  transition: transform 0.24s ease;
+}
+
+.planOuter:hover {
+  transform: translateY(-5px);
+}
+
+/* Mobile-first: badges sit in normal flow at the top of the card so they never
+   overlap the title / course count on narrow screens. */
+.planBadges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: clamp(14px, 2vw, 18px);
+}
+
+.planBadge {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(45, 15, 120, 0.16);
+}
+
+.offerBadge {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #f97316, #f43f7e);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(244, 63, 126, 0.28);
+}
+
+/* Desktop: restore the original floating badges over the card's top edge. */
+@media (min-width: 768px) {
+  .planBadges {
+    position: absolute;
+    top: -12px;
+    left: clamp(16px, 3vw, 26px);
+    right: clamp(16px, 3vw, 26px);
+    z-index: 2;
+    justify-content: flex-end;
+    margin-bottom: 0;
+  }
+
+  .planBadge {
+    padding: 6px 14px;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 8px 20px rgba(45, 15, 120, 0.18);
+  }
+
+  .offerBadge {
+    padding: 6px 14px;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    box-shadow: 0 8px 20px rgba(244, 63, 126, 0.28);
+  }
+}
+
+.planInner {
+  border-radius: 21px;
+  background: #ffffff;
+  padding: clamp(22px, 2.6vw, 32px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.planHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.planName {
+  min-width: 0;
+}
+
+.planTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(19px, 2vw, 23px);
+  letter-spacing: -0.02em;
+}
+
+.planBlurb {
+  color: var(--color-muted-1);
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 6px 0 0;
+}
+
+.planCount {
+  text-align: right;
+  flex: 0 0 auto;
+}
+
+.planCountValue {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(23px, 2.6vw, 30px);
+  letter-spacing: -0.03em;
+}
+
+.planCountLabel {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--color-muted-3);
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 10px;
+  margin-top: clamp(16px, 2vw, 20px);
+}
+
+.priceValue {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(26px, 3vw, 32px);
+  letter-spacing: -0.03em;
+}
+
+.originalPrice {
+  font-size: clamp(15px, 1.6vw, 17px);
+  color: var(--color-muted-3);
+  text-decoration: line-through;
+  text-decoration-color: rgba(23, 18, 31, 0.35);
+}
+
+.discountChip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.priceUnit {
+  font-size: 14px;
+  color: var(--color-muted-3);
+}
+
+.priceToggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--color-bg-tint);
+  border: 1px solid rgba(23, 18, 31, 0.08);
+}
+
+.priceToggleBtn {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted-2);
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.priceToggleBtn:hover {
+  color: var(--color-violet-deep);
+}
+
+.levelBadge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: clamp(14px, 1.8vw, 18px);
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #f4f1fe;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.highlights {
+  margin-top: clamp(14px, 1.8vw, 18px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.highlightChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--color-bg-tint);
+  border: 1px solid rgba(23, 18, 31, 0.08);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-muted-1);
+  white-space: nowrap;
+}
+
+.highlightIcon {
+  display: none;
+}
+
+.highlightDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  display: block;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(23, 18, 31, 0.09);
+  margin: clamp(18px, 2.2vw, 22px) 0;
+}
+
+.tracksHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tracksLabel {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.curriculumBtn {
+  border: 1px solid;
+  border-radius: 999px;
+  background: transparent;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.curriculumBtn:hover {
+  background: var(--color-bg-tint);
+}
+
+.tracks {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trackChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 10px;
+  background: var(--color-bg-tint);
+  border: 1px solid rgba(23, 18, 31, 0.09);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-muted-5);
+  white-space: nowrap;
+}
+
+.trackLocked {
+  color: var(--color-muted-3);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.trackX {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: #d93a4a;
+}
+
+.trackIcon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+}
+
+.certRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: clamp(14px, 1.8vw, 18px);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-muted-3);
+}
+
+.certRow[data-included="true"] {
+  color: var(--color-muted-5);
+}
+
+.certIcon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 4vw, 32px);
+  background: rgba(23, 18, 31, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: modalFade 0.16s ease;
+}
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+  }
+}
+
+.modal {
+  width: min(720px, 100%);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(23, 18, 31, 0.4);
+}
+
+.modalHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(18px, 3vw, 26px);
+  color: #ffffff;
+}
+
+.modalTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(17px, 2.2vw, 21px);
+  letter-spacing: -0.02em;
+}
+
+.modalSub {
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.modalClose {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.modalBody {
+  padding: clamp(18px, 3vw, 26px);
+  overflow-y: auto;
+  display: grid;
+  gap: clamp(16px, 2.2vw, 22px);
+}
+
+.curTrack {
+  display: grid;
+  gap: 10px;
+}
+
+.curTrackHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.curCount {
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-3);
+}
+
+.curTopics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.curTopic {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--color-bg-tint);
+  border: 1px solid rgba(23, 18, 31, 0.08);
+  font-size: 13px;
+  color: var(--color-muted-2);
+}
+
+.modalCta {
+  display: block;
+  padding: clamp(14px, 2.4vw, 20px) clamp(18px, 3vw, 26px);
+  border-top: 1px solid rgba(23, 18, 31, 0.09);
+}
+
+.ctaWrap {
+  margin-top: auto;
+  padding-top: clamp(20px, 2.6vw, 26px);
+  display: block;
+}
+
+.ctaButton {
+  display: block;
+  text-align: center;
+  padding: 15px 22px;
+  border-radius: 13px;
+  font-weight: 700;
+  font-size: 16.5px;
+  transition: transform 0.18s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+}
+
+/* /premium wide card — larger, richer desktop treatment: tinted count + price panels,
+   icon-badge highlight pills, roomier track tiles and an arrow CTA. Declared after the
+   base rules so it wins at equal specificity. Accent is the Premium plan's pink
+   (.wide only ever renders that plan). */
+@media (min-width: 920px) {
+  .gridSingle:has(.wide) {
+    grid-template-columns: minmax(0, 1040px);
+  }
+
+  .wide .planInner {
+    padding: clamp(24px, 2.4vw, 30px);
+    column-gap: clamp(28px, 3vw, 44px);
+  }
+
+  .wide .planTitle {
+    font-size: clamp(28px, 2.7vw, 34px);
+    line-height: 1.05;
+    font-weight: 800;
+  }
+
+  .wide .planBlurb {
+    font-size: clamp(14px, 1.2vw, 16px);
+    margin-top: 6px;
+  }
+
+  .wide .planHead {
+    justify-content: space-between;
+  }
+
+  .wide .planCount {
+    text-align: center;
+    padding: 10px 18px;
+    border-radius: 16px;
+    background: rgba(250, 16, 85, 0.07);
+  }
+
+  .wide .planCountValue {
+    font-size: clamp(28px, 2.6vw, 34px);
+    line-height: 1;
+  }
+
+  .wide .planCountLabel {
+    font-family: inherit;
+    font-size: 13px;
+    margin-top: 2px;
+    color: var(--color-muted-1);
+  }
+
+  .wide .priceRow {
+    margin-top: clamp(12px, 1.4vw, 16px);
+    padding: 12px 18px;
+    border-radius: 16px;
+    background: rgba(250, 16, 85, 0.07);
+    column-gap: 12px;
+  }
+
+  .wide .originalPrice {
+    font-size: clamp(16px, 1.5vw, 19px);
+  }
+
+  .wide .priceValue {
+    font-size: clamp(36px, 3.4vw, 44px);
+    line-height: 1;
+  }
+
+  .wide .discountChip {
+    padding: 5px 13px;
+    font-family: inherit;
+    font-size: clamp(13px, 1.1vw, 14px);
+  }
+
+  .wide .priceUnit {
+    font-size: clamp(13px, 1.1vw, 15px);
+    color: var(--color-muted-1);
+  }
+
+  .wide .levelBadge {
+    margin-top: clamp(12px, 1.4vw, 16px);
+    padding: 6px 18px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    background: rgba(250, 16, 85, 0.08);
+  }
+
+  .wide .highlights {
+    gap: 10px;
+    padding-top: clamp(12px, 1.4vw, 16px);
+  }
+
+  .wide .highlightChip {
+    white-space: normal;
+    line-height: 1.25;
+    gap: 10px;
+    padding: 7px 14px 7px 8px;
+    border-radius: 999px;
+    background: #ffffff;
+    font-family: inherit;
+    font-size: clamp(12.5px, 1vw, 14px);
+    color: var(--color-muted-5);
+    box-shadow: 0 2px 8px rgba(23, 18, 31, 0.04);
+  }
+
+  .wide .highlightDot {
+    display: none;
+  }
+
+  .wide .highlightIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: rgba(250, 16, 85, 0.1);
+  }
+
+  .wide .highlightIcon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .wide .tracksLabel {
+    font-size: 12px;
+  }
+
+  .wide .curriculumBtn {
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 700;
+    border-width: 1.5px;
+  }
+
+  .wide .tracks {
+    gap: 8px 10px;
+    margin-top: clamp(12px, 1.4vw, 16px);
+  }
+
+  .wide .trackChip {
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: clamp(13px, 1.05vw, 14.5px);
+    color: var(--color-muted-5);
+    text-align: left;
+    background: linear-gradient(180deg, #ffffff, var(--color-bg-tint));
+    box-shadow: 0 2px 8px rgba(23, 18, 31, 0.04);
+  }
+
+  .wide .trackIcon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .wide .certRow {
+    padding: 12px 16px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+
+  .wide .certRow .certIcon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .wide .ctaButton {
+    position: relative;
+    padding: 15px 60px;
+    border-radius: 14px;
+    font-size: clamp(18px, 1.7vw, 21px);
+    font-weight: 800;
+  }
+
+  .wide .ctaButton::after {
+    content: "→";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #fa1055;
+    font-size: 19px;
+    line-height: 34px;
+    text-align: center;
+  }
+}

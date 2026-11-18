@@ -1,0 +1,7 @@
+[build.environment]
+  # Turbopack's persistent build cache (Next 16) writes raw env-var values into its
+  # .sst cache files under .netlify/.next/cache for cache invalidation. That's Netlify's
+  # own build-server cache dir — never committed to git, never shipped to the published
+  # site — but Netlify's secrets scanner checks the whole build directory and flags it
+  # as a false positive. Exclude it from the scan rather than disabling scanning entirely.
+  SECRETS_SCAN_OMIT_PATHS = ".netlify/.next/cache/**"

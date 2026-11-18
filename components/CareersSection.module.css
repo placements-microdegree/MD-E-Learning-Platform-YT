@@ -1,0 +1,244 @@
+@keyframes career-flow {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: -200% 0%;
+  }
+}
+
+@keyframes career-flow-vertical {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% -200%;
+  }
+}
+
+.section {
+  position: relative;
+  padding: clamp(52px, 7vw, 104px) clamp(16px, 4vw, 32px);
+  background: var(--color-bg-tint);
+  overflow: hidden;
+}
+
+.watermark {
+  position: absolute;
+  left: -20px;
+  bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: clamp(60px, 10vw, 130px);
+  line-height: 1;
+  color: rgba(75, 27, 224, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+
+.container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pathWrap {
+  margin-top: clamp(28px, 4vw, 44px);
+  display: flex;
+  align-items: stretch;
+  gap: clamp(8px, 2vw, 20px);
+}
+
+.fromCol,
+.toCol {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.colLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted-3);
+  margin-bottom: clamp(14px, 1.8vw, 18px);
+}
+
+.fromList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.fromChip {
+  padding: 7px 14px;
+  border-radius: 11px;
+  background: #ffffff;
+  border: 1px solid rgba(23, 18, 31, 0.09);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(12.5px, 1.25vw, 14px);
+  color: var(--color-ink);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fromChip:hover {
+  border-color: rgba(75, 27, 224, 0.35);
+  transform: translateX(4px);
+  box-shadow: 0 10px 22px rgba(45, 15, 120, 0.08);
+}
+
+.funnel {
+  flex: none;
+  width: clamp(56px, 6vw, 96px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.funnelLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(75, 27, 224, 0.1),
+    rgba(75, 27, 224, 0.55) 35%,
+    rgba(250, 16, 85, 0.55) 65%,
+    rgba(250, 16, 85, 0.1)
+  );
+  background-size: 220% 100%;
+  animation: career-flow 3.4s linear infinite;
+}
+
+.funnelBadge {
+  position: relative;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(75, 27, 224, 0.22);
+  box-shadow: 0 10px 22px rgba(45, 15, 120, 0.12);
+  color: var(--color-violet-deep);
+}
+
+.funnelIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.toCol {
+  gap: clamp(12px, 1.6vw, 18px);
+}
+
+.trackCard {
+  background: #ffffff;
+  border: 1px solid rgba(23, 18, 31, 0.09);
+  border-radius: 18px;
+  padding: clamp(16px, 2vw, 22px);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trackCard:hover {
+  border-color: rgba(75, 27, 224, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(45, 15, 120, 0.1);
+}
+
+.trackHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trackGlyph {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(140deg, rgba(75, 27, 224, 0.14), rgba(250, 16, 85, 0.14));
+  border: 1px solid rgba(75, 27, 224, 0.16);
+  color: var(--color-violet-deep);
+}
+
+.trackGlyphIcon {
+  width: 19px;
+  height: 19px;
+}
+
+.trackTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(16px, 1.7vw, 18.5px);
+  letter-spacing: -0.02em;
+}
+
+.trackRoles {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trackRole {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--color-bg-tint);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-muted-2);
+  white-space: nowrap;
+}
+
+@media (max-width: 819px) {
+  .pathWrap {
+    flex-direction: column;
+  }
+
+  .funnel {
+    width: 100%;
+    height: 56px;
+  }
+
+  .funnelLine {
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 100%;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      180deg,
+      rgba(75, 27, 224, 0.1),
+      rgba(75, 27, 224, 0.55) 35%,
+      rgba(250, 16, 85, 0.55) 65%,
+      rgba(250, 16, 85, 0.1)
+    );
+    background-size: 100% 220%;
+    animation-name: career-flow-vertical;
+  }
+
+  .funnelIcon {
+    transform: rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .funnelLine {
+    animation: none;
+  }
+}

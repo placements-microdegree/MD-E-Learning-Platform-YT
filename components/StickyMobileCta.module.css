@@ -1,0 +1,36 @@
+.bar {
+  display: none;
+}
+
+@media (max-width: 819px) {
+  .bar {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 70;
+    padding: 10px clamp(16px, 4vw, 32px) calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    border-top: 1px solid rgba(23, 18, 31, 0.08);
+    box-shadow: 0 -8px 24px rgba(45, 15, 120, 0.12);
+  }
+}
+
+.cta {
+  display: block;
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 14px;
+  background: var(--gradient-brand);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 10px 26px rgba(75, 27, 224, 0.3);
+}
+
+.cta:hover {
+  color: #ffffff;
+}

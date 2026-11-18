@@ -1,0 +1,46 @@
+# Runs scripts/sync-graphy.mjs (npm run sync:graphy) every 3 hours. Webhook deliveries from Graphy don't
+# say whether a paid transaction was manual (offer grant) or online, so those rows sit with
+# payment_mode = NULL until a full API sync derives it. Scheduling the sync keeps that gap to a few hours.
+# The sync is idempotent (everything upserts), so overlapping/extra runs are harmless.
+#
+# Failures: GitHub emails the repo owner when a scheduled run fails. Nothing is lost - the next run retries.
+#
+# One-time setup - repository secrets (Settings -> Secrets and variables -> Actions), same values as Netlify:
+#   GRAPHY_MERCHANT_ID, GRAPHY_API_KEY, NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY,
+#   GRAPHY_FREE_COURSE_URL, GRAPHY_COURSE_CHECKOUT_URL
+
+name: Sync Graphy data
+
+on:
+  schedule:
+    - cron: "15 */3 * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: sync-graphy
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Pull Graphy API into Supabase
+        env:
+          GRAPHY_MERCHANT_ID: ${{ secrets.GRAPHY_MERCHANT_ID }}
+          GRAPHY_API_KEY: ${{ secrets.GRAPHY_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          GRAPHY_FREE_COURSE_URL: ${{ secrets.GRAPHY_FREE_COURSE_URL }}
+          GRAPHY_COURSE_CHECKOUT_URL: ${{ secrets.GRAPHY_COURSE_CHECKOUT_URL }}
+          GRAPHY_E_LEARNING_FREE_COURSE_URL: ${{ secrets.GRAPHY_E_LEARNING_FREE_COURSE_URL }}
+          GRAPHY_E_LEARNING_CHECKOUT_URL: ${{ secrets.GRAPHY_E_LEARNING_CHECKOUT_URL }}
+          GRAPHY_ORGANIC_FREE_COURSE_URL: ${{ secrets.GRAPHY_ORGANIC_FREE_COURSE_URL }}
+          GRAPHY_ORGANIC_CHECKOUT_URL: ${{ secrets.GRAPHY_ORGANIC_CHECKOUT_URL }}
+        run: node scripts/sync-graphy.mjs

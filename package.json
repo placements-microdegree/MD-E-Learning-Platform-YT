@@ -1,0 +1,37 @@
+{
+  "name": "microdegree-landing",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "import:graphy-learners": "node --env-file=.env.local scripts/import-graphy-learners.mjs",
+    "import:graphy-memberships": "node --env-file=.env.local scripts/import-graphy-memberships.mjs",
+    "sync:graphy": "node --env-file=.env.local scripts/sync-graphy.mjs",
+    "sync:graphy-leads-to-lsq": "node --env-file=.env.local scripts/sync-graphy-leads-to-lsq.mjs"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.112.2",
+    "next": "16.3.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "browserslist": [
+    "chrome 111",
+    "edge 111",
+    "firefox 111",
+    "safari 16.4"
+  ],
+  "devDependencies": {
+    "@types/node": "20.14.15",
+    "@types/react": "18.3.5",
+    "@types/react-dom": "18.3.0",
+    "csv-parse": "^5.5.6",
+    "eslint": "9.13.0",
+    "eslint-config-next": "16.3.0",
+    "typescript": "5.5.4"
+  }
+}

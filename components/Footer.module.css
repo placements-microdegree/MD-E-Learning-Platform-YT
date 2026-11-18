@@ -1,0 +1,144 @@
+.footer {
+  padding: clamp(44px, 6vw, 80px) clamp(16px, 4vw, 32px) 32px;
+  background: var(--color-ink);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 819px) {
+  .footer {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+}
+
+.grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  gap: clamp(28px, 4vw, 44px);
+}
+
+.logoPill {
+  display: inline-flex;
+  padding: 9px 13px;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.logoImg {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.blurb {
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 16px 0 0;
+  max-width: 30ch;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.whatsapp:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.colLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ff5c86;
+}
+
+.contactLinks {
+  display: grid;
+  gap: 9px;
+  margin-top: 14px;
+  font-size: 15px;
+}
+
+.contactLinks a {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.contactLinks a:hover {
+  color: #ff5c86;
+}
+
+.socialRow {
+  display: flex;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.socialIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.socialIcon:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.socialIconGlyph {
+  width: 17px;
+  height: 17px;
+}
+
+.address {
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.bottomBar {
+  max-width: 1200px;
+  margin: clamp(32px, 4vw, 44px) auto 0;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.legalLinks {
+  display: flex;
+  gap: 18px;
+}
+
+.legalLinks a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.legalLinks a:hover {
+  color: #ff5c86;
+}

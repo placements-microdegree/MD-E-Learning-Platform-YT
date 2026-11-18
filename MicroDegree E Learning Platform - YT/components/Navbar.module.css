@@ -1,0 +1,163 @@
+@keyframes md-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  background: rgba(255, 255, 255, 0.82);
+  border-bottom: 1px solid rgba(23, 18, 31, 0.07);
+  box-shadow: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.nav.scrolled {
+  box-shadow: 0 8px 26px rgba(45, 15, 120, 0.1);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px clamp(16px, 4vw, 32px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.logo {
+  height: clamp(30px, 4.5vw, 38px);
+  width: auto;
+  display: block;
+}
+
+.desktopLinks {
+  display: none;
+  align-items: center;
+  gap: clamp(2px, 0.6vw, 8px);
+}
+
+.link {
+  padding: 9px 13px;
+  font-size: 15px;
+  color: var(--color-muted-2);
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.link:hover {
+  background: #f4f1fe;
+  color: var(--color-ink);
+}
+
+.ctaDesktop {
+  margin-left: 6px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  background: var(--gradient-brand);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(75, 27, 224, 0.26);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ctaDesktop:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(250, 16, 85, 0.32);
+  color: #ffffff;
+}
+
+.mobileBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.burger {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  border: 1px solid rgba(23, 18, 31, 0.12);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+.burgerLine {
+  width: 19px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-ink);
+  display: block;
+}
+
+.mobileMenu {
+  border-top: 1px solid rgba(23, 18, 31, 0.07);
+  background: #ffffff;
+  padding: 12px clamp(16px, 4vw, 32px) 20px;
+  display: grid;
+  gap: 4px;
+  animation: md-fade-up 0.22s ease both;
+}
+
+.mobileLink {
+  padding: 15px 12px;
+  border-radius: 12px;
+  font-size: 16.5px;
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.mobileLink:hover {
+  background: #f4f1fe;
+}
+
+.mobileCta {
+  margin-top: 6px;
+  padding: 16px 12px;
+  border-radius: 12px;
+  text-align: center;
+  background: var(--gradient-brand);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16.5px;
+}
+
+.mobileCta:hover {
+  color: #ffffff;
+}
+
+@media (min-width: 820px) {
+  .desktopLinks {
+    display: flex;
+  }
+  .mobileBar,
+  .mobileMenu {
+    display: none;
+  }
+}
